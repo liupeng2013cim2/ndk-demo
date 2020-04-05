@@ -1,0 +1,3 @@
+D:/github/ndk-demo/ndk/cmake-build-debug/CMakeFiles/ndk.dir
+D:/github/ndk-demo/ndk/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/github/ndk-demo/ndk/cmake-build-debug/CMakeFiles/rebuild_cache.dir
