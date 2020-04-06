@@ -3,4 +3,4 @@ project(ndk C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(ndk main.c)
+add_executable(ndk main.c test.h test.c)

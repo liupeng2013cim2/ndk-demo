@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ndk.dir/main.c.obj"
+  "CMakeFiles/ndk.dir/test.c.obj"
   "libndk.dll.a"
   "ndk.exe"
   "ndk.exe.manifest"

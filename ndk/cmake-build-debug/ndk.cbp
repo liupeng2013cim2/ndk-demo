@@ -77,6 +77,12 @@
 		<Unit filename="D:/github/ndk-demo/ndk/main.c">
 			<Option target="ndk"/>
 		</Unit>
+		<Unit filename="D:/github/ndk-demo/ndk/test.c">
+			<Option target="ndk"/>
+		</Unit>
+		<Unit filename="D:/github/ndk-demo/ndk/test.h">
+			<Option target="ndk"/>
+		</Unit>
 		<Unit filename="D:/github/ndk-demo/ndk/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

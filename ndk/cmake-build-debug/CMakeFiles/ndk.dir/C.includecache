@@ -6,7 +6,15 @@
 
 #IncludeRegexTransform: 
 
-D:/github/ndk-demo/ndk/main.c
+D:/github/ndk-demo/ndk/test.c
 stdio.h
 -
+stdarg.h
+-
+string.h
+-
+test.h
+D:/github/ndk-demo/ndk/test.h
+
+D:/github/ndk-demo/ndk/test.h
 

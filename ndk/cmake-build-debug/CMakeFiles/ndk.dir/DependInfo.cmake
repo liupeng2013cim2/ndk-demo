@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "D:/github/ndk-demo/ndk/main.c" "D:/github/ndk-demo/ndk/cmake-build-debug/CMakeFiles/ndk.dir/main.c.obj"
+  "D:/github/ndk-demo/ndk/test.c" "D:/github/ndk-demo/ndk/cmake-build-debug/CMakeFiles/ndk.dir/test.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

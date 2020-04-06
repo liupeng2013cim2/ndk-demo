@@ -73,12 +73,12 @@ preinstall:
 CMakeFiles/ndk.dir/all:
 	$(MAKE) -f CMakeFiles\ndk.dir\build.make CMakeFiles/ndk.dir/depend
 	$(MAKE) -f CMakeFiles\ndk.dir\build.make CMakeFiles/ndk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\github\ndk-demo\ndk\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target ndk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\github\ndk-demo\ndk\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target ndk"
 .PHONY : CMakeFiles/ndk.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ndk.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\github\ndk-demo\ndk\cmake-build-debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\github\ndk-demo\ndk\cmake-build-debug\CMakeFiles 3
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/ndk.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start D:\github\ndk-demo\ndk\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/ndk.dir/rule
