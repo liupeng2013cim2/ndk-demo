@@ -14,6 +14,12 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
+    private int mCount;
+
+    private void throwException() {
+        throw new IllegalStateException("state error");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +28,11 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
-        stringFromJava("hello from java");
+        try {
+            stringFromJava("hello from java");
+        } catch (Exception e) {
+            Log.i(TAG, e.getMessage());
+        }
     }
 
     /**
@@ -44,5 +54,6 @@ public class MainActivity extends AppCompatActivity {
         for (int t:mData) {
             Log.i(TAG, "i:" + t);
         }
+        Log.i(TAG, "count:" + mCount);
     }
 }
