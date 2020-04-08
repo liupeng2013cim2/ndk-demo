@@ -6,6 +6,13 @@
 
 using namespace std;
 
+void testLocalRef1(JNIEnv* env);
+void testGlobalRef(JNIEnv* env);
+void newString(JNIEnv* env);
+void testWeakGlobalRef(JNIEnv* env);
+jclass globalRef;
+jclass weakGlobalRef;
+
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_andy_ndkdemo_MainActivity_stringFromJNI(
         JNIEnv* env,
@@ -20,8 +27,8 @@ Java_com_andy_ndkdemo_MainActivity_stringFromJava(
         jobject thiz/* this */,
         jstring string
         ) {
-    int result = 100/0;
-    LOGD("result:%d", result);
+//    int result = 100/0;
+//    LOGD("result:%d", result);
     jboolean isCopy;
     const char * cstr = env->GetStringUTFChars(string, &isCopy);
     printf("%s\n", cstr);
@@ -107,10 +114,107 @@ Java_com_andy_ndkdemo_MainActivity_stringFromJava(
     // 抛异常
     jclass exceptionCls = env->FindClass("java/lang/NullPointerException");
     if (exceptionCls != 0) {
-        env->ThrowNew(exceptionCls, "not null");
+//        env->ThrowNew(exceptionCls, "not null");
+    }
+
+    // 局部引用  原生方法返回时，自动释放，此处为显示释放
+    env->DeleteLocalRef(exceptionCls);
+
+    testLocalRef1(env);
+    testLocalRef1(env);
+
+    testGlobalRef(env);
+    newString(env); // ok
+
+    env->DeleteGlobalRef(globalRef);
+    globalRef = NULL;
+
+    // 报错 globalRef已被delete
+//    newString(env);
+
+    if(globalRef != NULL) {
+        LOGD("globalRef is not null");
+    }
+
+    testWeakGlobalRef(env);
+
+    if (JNI_FALSE == env->IsSameObject(weakGlobalRef, NULL)) {
+        LOGD("weakGlobalRef is recycled"); // 弱全局引用指向的对象是局部变量，超出了作用域被释放
+    } else {
+        LOGD("weakGlobalRef is still alive");
     }
 
 
+
     return env->NewStringUTF(hello.c_str());
+}
+
+void newString(JNIEnv* env) {
+    jmethodID  constructorId = env->GetMethodID(globalRef, "<init>", "([C)V");
+
+    jcharArray  elemArray = env->NewCharArray( 10);
+    jchar* chars = env->GetCharArrayElements(elemArray, NULL);
+    for (int i = 0; i < 10; ++i) {
+        *(chars + i) = '0' + i;
+    }
+    env->ReleaseCharArrayElements(elemArray, chars, JNI_COMMIT);
+    jstring str1 = static_cast<jstring>(env->NewObject(globalRef, constructorId, elemArray));
+    const char* cstr1 = env->GetStringUTFChars(str1, NULL);
+    LOGD("1111str:%s", cstr1);
+}
+
+void testGlobalRef(JNIEnv* env) {
+    jclass cls = env->FindClass("java/lang/String");
+    globalRef = static_cast<jclass>(env->NewGlobalRef(cls));
+}
+
+void testWeakGlobalRef(JNIEnv* env) {
+    jclass cls = env->FindClass("java/lang/String");
+    weakGlobalRef = static_cast<jclass>(env->NewWeakGlobalRef(cls));
+}
+
+void testLocalRef1(JNIEnv* env) {
+    static jclass sClass  = NULL;
+    static jmethodID  sConstructorId = NULL;
+    static int count = 1;
+    LOGD("count:%d", count);
+    if(sClass == NULL) {
+        LOGD("static cls is null");
+        sClass = env->FindClass("java/lang/String");
+        sConstructorId = env->GetMethodID(sClass, "<init>", "([C)V");
+
+        jcharArray  elemArray = env->NewCharArray( 10);
+        jchar* chars = env->GetCharArrayElements(elemArray, NULL);
+        for (int i = 0; i < 10; ++i) {
+            *(chars + i) = '0' + i;
+        }
+        env->ReleaseCharArrayElements(elemArray, chars, JNI_COMMIT);
+        jstring str = static_cast<jstring>(env->NewObject(sClass, sConstructorId, elemArray));
+        const char* cstr = env->GetStringUTFChars(str, NULL);
+        LOGD("str:%s ,count:%d", cstr, count);
+    } else {
+        LOGD("STATIC IS NOT NULL");
+
+        // ERROR 第二次进来，可能报错，静态变量指向的局部对象超出作用域被释放了
+        /**
+        jcharArray  elemArray = env->NewCharArray( 10);
+        jchar* chars = env->GetCharArrayElements(elemArray, NULL);
+        for (int i = 0; i < 10; ++i) {
+            *(chars + i) = '0' + i;
+        }
+        env->ReleaseCharArrayElements(elemArray, chars, JNI_COMMIT);
+        jstring str = static_cast<jstring>(env->NewObject(sClass, sConstructorId, elemArray));
+        const char* cstr = env->GetStringUTFChars(str, NULL);
+        LOGD("str:%s ,count:%d", cstr, count);
+         */
+    }
+
+
+    if(sClass != NULL) {
+        LOGD("static cls is not null");
+    } else {
+
+    }
+    count++;
 }
 
