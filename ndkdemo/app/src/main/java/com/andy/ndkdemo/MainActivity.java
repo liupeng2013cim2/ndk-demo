@@ -29,10 +29,29 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
         try {
-            stringFromJava("hello from java");
+            String hello = "hello from java";
+            stringFromJava(hello);
+            Log.i(TAG, "hello set null in java");
+            String hello2 = new String("hello2");
+            stringFromJava2(hello2);
+            hello2 = null;
+            System.gc();
+//            Thread.sleep(2000);
+            Log.i(TAG, "hello set null");
+//            accessGlobal();
+
+            startNativeThread();
+
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onstart");
+        accessWeakGlobal();
     }
 
     /**
@@ -42,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNI();
 
     public native String stringFromJava(String string);
+
+    public native void stringFromJava2(String string);
+
+    public native void accessGlobal();
+
+    public native void accessWeakGlobal();
+
+    public native void startNativeThread();
 
     public void updateUi(String text) {
         TextView tv = findViewById(R.id.sample_text);
