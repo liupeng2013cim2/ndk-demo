@@ -7,6 +7,7 @@
 
 class Animal
 {
+    friend int equals(Animal &animal1, Animal &animal2);
 public:
     Animal(const char* name, bool sex);
     ~Animal();
@@ -21,6 +22,7 @@ private:
     bool m_sex;
     //Animal son; //error 嵌套 导致类型定义不完整 incomplete type
     Animal* m_son = NULL;
+    static Animal god;
 };
 
 #endif //NDKDEMO_ANIMAL_H

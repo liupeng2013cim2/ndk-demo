@@ -35,6 +35,9 @@ Java_com_andy_ndkdemo_MainActivity_testClass(
     son->walk();
     animal->setSon(son);
 
+    int eq = equals(*animal, *son);
+    LOGD("animal - son : %d", eq);
+
     Animal* son1 = animal->getSon();
     son1->walk();
     son1->eat();
