@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdio.h>
 #include "log.h"
+#include "animal.h"
+#include "Cat.h"
 
 using namespace std;
 
@@ -19,6 +21,41 @@ jclass weakGlobalRef;
 jstring globalRefStr;
 jobject weakGlobalRefStr;
 JavaVM * javaVm;
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_andy_ndkdemo_MainActivity_testClass(
+        JNIEnv *env,
+        jobject /* this */) {
+    Animal* animal = new Animal("dog", true);
+    animal->walk();
+    animal->eat();
+
+    Animal* son = new Animal("dog-son", true);
+    son->eat();
+    son->walk();
+    animal->setSon(son);
+
+    Animal* son1 = animal->getSon();
+    son1->walk();
+    son1->eat();
+
+    delete animal;
+    delete son;
+
+    Cat* cat = new Cat("cat1", false, "red", 22.8f);
+    cat->walk();
+    cat->eat();
+    delete cat;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_andy_ndkdemo_MainActivity_crash(JNIEnv *env,
+                                                    jobject /* this */) {
+
+//    env = 0;
+    jclass cls = env->FindClass("java/lang/String");
+
+}
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_andy_ndkdemo_MainActivity_accessGlobal(JNIEnv *env,
@@ -59,7 +96,7 @@ Java_com_andy_ndkdemo_MainActivity_accessWeakGlobal(JNIEnv *env,
 
 }
 
-void* threadMethod(void* args) {
+void * threadMethod(void* args) {
     LOGD("threadMethod");
     JNIEnv* env ;
     // 建立线程相关的JNIEnv, javaVM是各个线程共用的
@@ -76,8 +113,8 @@ void* threadMethod(void* args) {
     const char* cstr = env->GetStringUTFChars(jstring1, NULL);
     LOGD("CSTR:%s", cstr);
     javaVm->DetachCurrentThread();
-    char * ret = "jjj";
-    return ret;
+    char* str = "jjjj";
+    return str;
 }
 
 extern "C" JNIEXPORT jstring JNICALL

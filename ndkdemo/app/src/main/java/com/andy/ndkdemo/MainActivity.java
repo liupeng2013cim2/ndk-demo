@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
             startNativeThread();
 
+//            crash();
+
+            testClass();
+
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
         }
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
     public native void accessWeakGlobal();
 
     public native void startNativeThread();
+
+    public native void crash();
+
+    public native void testClass();
 
     public void updateUi(String text) {
         TextView tv = findViewById(R.id.sample_text);
