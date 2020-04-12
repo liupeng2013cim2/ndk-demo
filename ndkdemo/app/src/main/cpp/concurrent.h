@@ -10,12 +10,17 @@ using namespace std;
 
 class Concurrent {
 public:
+    static int myCount;
+    static bool running;
+    static pthread_mutex_t mutex;
     Concurrent();
     ~Concurrent();
     void read();
     void write();
+    void finish();
+    vector<int>* data();
 private:
-    vector<char>* m_data;
+    vector<int>* m_data = nullptr;
 };
 
 
