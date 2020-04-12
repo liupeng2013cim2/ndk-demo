@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
-include_directories(log.h animal.h Cat.h)
+include_directories(log.h animal.h Cat.h ioutil.h concurrent.h)
 add_library( # Sets the name of the library.
              native-lib
 
@@ -18,9 +18,10 @@ add_library( # Sets the name of the library.
 
              # Provides a relative path to your source file(s).
              native-lib.cpp
-        animal.cpp
-        Cat.cpp
-
+             animal.cpp
+             Cat.cpp
+             ioutil.cpp
+              concurrent.cpp
         )
 
 # Searches for a specified prebuilt library and stores the path as a

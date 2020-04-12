@@ -16,6 +16,8 @@ public:
     float weight();
     void color(const char* color);
     char* color()const ;
+    virtual void walk(); // 重写override 子类里也要声明 与java不同
+    virtual void eat();
 private:
     char* m_color;
     float m_weight;

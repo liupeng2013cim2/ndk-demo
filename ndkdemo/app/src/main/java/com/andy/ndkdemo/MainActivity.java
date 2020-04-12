@@ -46,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
             testClass();
 
+            copyFile("/data/data/com.andy.ndkdemo/from.txt",
+                    "/data/data/com.andy.ndkdemo/to.txt");
+
+            testConcurrent();
+
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
         }
@@ -77,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
     public native void crash();
 
     public native void testClass();
+
+    public native void copyFile(String from, String to);
+
+    public native void testConcurrent();
 
     public void updateUi(String text) {
         TextView tv = findViewById(R.id.sample_text);

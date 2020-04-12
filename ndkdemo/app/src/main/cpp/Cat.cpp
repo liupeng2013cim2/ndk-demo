@@ -28,6 +28,14 @@ void Cat::weight(float weight) {
     m_weight = weight;
 }
 
+void Cat::walk() {
+    LOGD("walk cat %s",name());
+}
+
+void Cat::eat() {
+    LOGD("eat cat %s", name());
+}
+
 void Cat::color(const char *color) {
     m_color = new char[strlen(color) + 1];
     strcpy(m_color, color);

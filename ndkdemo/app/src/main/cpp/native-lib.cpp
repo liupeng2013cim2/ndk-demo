@@ -5,6 +5,8 @@
 #include "log.h"
 #include "animal.h"
 #include "Cat.h"
+#include "ioutil.h"
+#include "concurrent.h"
 
 using namespace std;
 
@@ -21,6 +23,29 @@ jclass weakGlobalRef;
 jstring globalRefStr;
 jobject weakGlobalRefStr;
 JavaVM * javaVm;
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_andy_ndkdemo_MainActivity_testConcurrent(
+        JNIEnv *env,
+        jobject thiz/* this */) {
+        Concurrent* concurrent = new Concurrent;
+        concurrent->read();
+        concurrent->write();
+
+        delete concurrent;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_andy_ndkdemo_MainActivity_copyFile(
+        JNIEnv *env,
+        jobject thiz,/* this */
+        jstring from,
+        jstring to) {
+    const char* fromStr = env->GetStringUTFChars(from, NULL);
+    const char* toStr = env->GetStringUTFChars(to, NULL);
+    IOUtil::getInstance()->copyFile(fromStr, toStr);
+    LOGD("copy file, from %s\n to %s", fromStr, toStr);
+}
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_andy_ndkdemo_MainActivity_testClass(
@@ -49,6 +74,12 @@ Java_com_andy_ndkdemo_MainActivity_testClass(
     cat->walk();
     cat->eat();
     delete cat;
+
+    Animal* cat1 = new Cat("a_cat", false, "yellow", 30.9f);
+    cat1->eat();
+    cat1->walk();
+    delete cat1;
+
 }
 
 extern "C" JNIEXPORT void JNICALL

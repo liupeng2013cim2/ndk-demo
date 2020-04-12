@@ -13,8 +13,8 @@ public:
     ~Animal();
     void setSon(Animal* son);
     Animal* getSon() const;
-    void walk();
-    void eat();
+    virtual void walk();
+    virtual void eat();
     bool sex();
     char* name() const;
 private:
