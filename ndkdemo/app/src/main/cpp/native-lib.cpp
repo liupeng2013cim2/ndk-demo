@@ -381,5 +381,6 @@ void testLocalRef1(JNIEnv *env) {
 
     }
     count++;
+
 }
 

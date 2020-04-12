@@ -6,13 +6,17 @@
 #define NDKDEMO_CONCURRENT_H
 
 #include <vector>
+#include <__mutex_base>
+
 using namespace std;
 
 class Concurrent {
 public:
     static int myCount;
     static bool running;
-    static pthread_mutex_t mutex;
+    static mutex mutex;
+    static condition_variable full_condition;
+    static condition_variable empty_condition;
     Concurrent();
     ~Concurrent();
     void read();
