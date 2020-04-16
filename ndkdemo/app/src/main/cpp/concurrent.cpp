@@ -29,6 +29,7 @@ void* writeData(void* args){
     vector<int>* data = concurrent->data();
     while(Concurrent::running) {
         unique_lock<std::mutex> lock(Concurrent::mutex);
+        lock.lock();
         LOGD("WRIET SIZE: %d", data->size());
         while(data->size() >= MAX_SHARE_COUNT) {
             LOGD("write, size is over %d", MAX_SHARE_COUNT);
@@ -70,7 +71,7 @@ void* readData(void* args) {
 
 Concurrent::Concurrent() {
     LOGD("构造函数Concurrent");
-    m_data = new vector<int>;
+    m_data = new vector<int>(10);
     m_data->clear();
 }
 
